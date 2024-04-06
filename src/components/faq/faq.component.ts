@@ -4,8 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-faq',
   standalone: true,
   imports: [],
-  templateUrl: './faq.component.html',
-  styleUrl: './faq.component.css'
+  templateUrl: './faq.component.html'
 })
 export class FaqComponent {
 
