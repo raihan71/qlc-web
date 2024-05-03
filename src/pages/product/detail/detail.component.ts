@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { DisqusModule } from 'ngx-disqus';
 
 @Component({
   selector: 'app-detail',
   standalone: true,
-  imports: [CommonModule, CarouselModule],
+  imports: [CommonModule, CarouselModule, DisqusModule],
   templateUrl: './detail.component.html',
   styles: [`
   .carousel-item {

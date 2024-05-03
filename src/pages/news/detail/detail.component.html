@@ -36,7 +36,7 @@
                   </div>
               </div>
               <div class="w-full md:w-1/4 py-4 md:py-0 md:px-4">
-                  <div class="bg-gray-50 p-4">
+                  <div class="bg-zinc-50 p-4">
                       <h2 class="text-xl font-bold text-gray-800 mb-4">Recent Posts</h2>
                       <ul class="list-none">
                           <li class="mb-2">
@@ -55,8 +55,12 @@
                   </div>
               </div>
           </div>
-
       </div>
+      <section class="bg-white md:border-t-2 py-8 antialiased">
+        <div class="mx-auto">
+          <disqus [identifier]="'/news/detail'"></disqus>
+        </div>
+      </section>
     </div>
   </section>
 </main>
