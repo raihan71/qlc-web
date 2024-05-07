@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PaginationComponent } from './pagination.component';
+import { GtmAnalyticComponent } from './gtm-analytic.component';
 
-describe('PaginationComponent', () => {
-  let component: PaginationComponent;
-  let fixture: ComponentFixture<PaginationComponent>;
+describe('GtmAnalyticComponent', () => {
+  let component: GtmAnalyticComponent;
+  let fixture: ComponentFixture<GtmAnalyticComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PaginationComponent]
+      imports: [GtmAnalyticComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PaginationComponent);
+    fixture = TestBed.createComponent(GtmAnalyticComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

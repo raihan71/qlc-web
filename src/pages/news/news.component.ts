@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NewslistComponent } from '../../components/pages/newslist/newslist.component';
-import { PaginationComponent } from '../../components/shared/pagination/pagination.component';
 import { ContentfulService } from '../../app/services/contentful.service';
 import { environment } from '../../environments/environment';
 import { MetaService } from '../../app/services/metaseo.service';
@@ -10,7 +9,7 @@ const CONFIG = environment.contentful_config.contentTypeIds;
 @Component({
   selector: 'app-news',
   standalone: true,
-  imports: [NewslistComponent, PaginationComponent],
+  imports: [NewslistComponent],
   templateUrl: './news.component.html'
 })
 export class NewsComponent implements OnInit {
