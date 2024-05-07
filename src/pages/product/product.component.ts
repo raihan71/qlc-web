@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CardlistComponent } from '../../components';
-import { PaginationComponent } from '../../components/shared/pagination/pagination.component';
 import { environment } from '../../environments/environment';
 import { ContentfulService } from '../../app/services/contentful.service';
 import { MetaService } from '../../app/services/metaseo.service';
@@ -10,7 +9,7 @@ const CONFIG = environment.contentful_config.contentTypeIds;
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CardlistComponent,PaginationComponent],
+  imports: [CardlistComponent],
   templateUrl: './product.component.html'
 })
 export class ProductComponent implements OnInit {

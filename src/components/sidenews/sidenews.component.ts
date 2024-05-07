@@ -11,4 +11,5 @@ import { PipesModule } from '../../app/pipes/pipes.module';
 export class SidenewsComponent {
   @Input() title:string = '';
   @Input() items:Array<any> = [];
+  @Input() linkDetail:string = '/news';
 }

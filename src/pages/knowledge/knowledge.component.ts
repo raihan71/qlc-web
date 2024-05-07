@@ -1,7 +1,6 @@
 import { MetaService } from './../../app/services/metaseo.service';
 import { Component } from '@angular/core';
 import { NewslistComponent } from '../../components/pages/newslist/newslist.component';
-import { PaginationComponent } from '../../components/shared/pagination/pagination.component';
 import { ContentfulService } from '../../app/services/contentful.service';
 import { environment } from '../../environments/environment';
 
@@ -10,7 +9,7 @@ const CONFIG = environment.contentful_config.contentTypeIds;
 @Component({
   selector: 'app-knowledge',
   standalone: true,
-  imports: [NewslistComponent, PaginationComponent],
+  imports: [NewslistComponent],
   templateUrl: './knowledge.component.html'
 })
 export class KnowledgeComponent {

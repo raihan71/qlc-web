@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router } from '@angular/router';
 import { NavbarComponent } from '../components/navbar/navbar.component';
@@ -8,19 +8,21 @@ import { ContentfulService } from './services/contentful.service';
 import { aboutMe } from './models/aboutMe';
 import { PipesModule } from './pipes/pipes.module';
 import { environment } from '../environments/environment';
+import { GoogleAnalyticsGTagComponent } from '../components/gtm-analytic/gtm-analytic.component';
 
 const CONFIG = environment.contentful_config.contentTypeIds;
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, FooterComponent, PipesModule],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, FooterComponent, PipesModule, GoogleAnalyticsGTagComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
   about:aboutMe = {};
   waMe:string = '//api.whatsapp.com/send?phone=';
   socials:Array<any> = [];
+  activateGoTop: boolean = false;
 
   constructor(
     private _aboutMe: AboutMeService,
@@ -44,5 +46,17 @@ export class AppComponent {
         });
       })
     });
+  }
+
+  @HostListener('window:scroll',[])
+  onWindowScroll() {
+    if ( window.scrollY > 100 ) {
+      this.activateGoTop = true;
+    } else {
+      this.activateGoTop = false;
+    }
+  }
+  scrollToTop() {
+      return window.scrollTo(0, 0);
   }
 }
