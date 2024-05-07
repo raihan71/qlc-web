@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -14,6 +14,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class NavbarComponent {
   isNavbarFixed: boolean = false;
   showMenuMobile: boolean = false;
+  @Input() logo: string = '';
+  @Input() name: any;
 
   @HostListener('window:scroll', ['$event']) onScroll() {
     if (window.scrollY > 100) {

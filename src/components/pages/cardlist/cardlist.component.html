@@ -3,10 +3,10 @@
       <div class="border-b mb-5 flex justify-between text-sm">
           <div class="text-green-600 flex items-center pb-2 pr-2 border-b-2 border-green-600 uppercase">
               <svg class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"></path></svg>
-              <a href="#" class="font-semibold inline-block">{{title}}</a>
+              <a href="javascript:;" class="font-semibold inline-block">{{title}}</a>
           </div>
           @if (!hideAllBtn) {
-            <a href="#">Lihat Semua</a>
+            <a routerLink="/program">Lihat Semua</a>
           }
       </div>
 
@@ -15,11 +15,11 @@
 
             <!-- CARD 1 -->
             <div class="rounded overflow-hidden shadow-lg flex flex-col">
-                <a href="/program/1"></a>
-                <div class="relative"><a href="/program/1">
-                        <img class="w-full"
-                            src="https://images.pexels.com/photos/61180/pexels-photo-61180.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500"
-                            alt="Sunset in the mountains">
+                <a [routerLink]="['/program', item?.sys?.id]"></a>
+                <div class="relative"><a [routerLink]="['/program', item?.sys?.id]">
+                        <img class="w-full bg-gray-500"
+                            [src]="item.img"
+                            [alt]="item.fields?.name">
                         <div
                             class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25">
                         </div>
@@ -27,20 +27,20 @@
                     <span>
                         <div
                             class="text-xs absolute top-0 right-0 bg-green-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-green-600 transition duration-500 ease-in-out">
-                            Cooking
+                            {{item.fields?.tag}}
                         </div>
                     </span>
                 </div>
                 <div class="px-6 py-4 mb-auto">
-                    <a
-                        class="font-medium text-lg inline-block hover:text-green-600 transition duration-500 ease-in-out inline-block mb-2">Simplest
-                        Salad Recipe ever</a>
-                    <p class="text-gray-500 text-sm">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    <a class="font-medium text-lg inline-block hover:text-green-600 transition duration-500 ease-in-out mb-2">
+                      {{item.fields?.name}}
+                    </a>
+                    <p class="text-gray-500 text-sm truncate">
+                        {{item.fields?.desc | toHtml}}
                     </p>
                 </div>
                 <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
-                    <a href="/program/1" class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+                    <a [routerLink]="['/program', item.sys?.id]" class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                           <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
                           <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
@@ -52,7 +52,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
                           <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
                         </svg>
-                        <span class="ml-1">4,5/5</span>
+                        <span class="ml-1">4,9/5</span>
                     </a>
                 </div>
             </div>

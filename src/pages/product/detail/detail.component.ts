@@ -1,12 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { DisqusModule } from 'ngx-disqus';
+import { ContentfulService } from '../../../app/services/contentful.service';
+import { ActivatedRoute } from '@angular/router';
+import { PipesModule } from '../../../app/pipes/pipes.module';
+import { environment } from '../../../environments/environment';
+
+const CONFIG = environment.contentful_config.contentTypeIds;
 
 @Component({
   selector: 'app-detail',
   standalone: true,
-  imports: [CommonModule, CarouselModule, DisqusModule],
+  imports: [CommonModule, CarouselModule, DisqusModule, PipesModule],
   templateUrl: './detail.component.html',
   styles: [`
   .carousel-item {
@@ -21,8 +27,11 @@ import { DisqusModule } from 'ngx-disqus';
   .rotate-180 {transform: rotate(-180deg);}
   `]
 })
-export class DetailComponent {
+export class DetailComponent implements OnInit {
   items:Array<any> = [1,2,3,4];
+  product:any = {};
+  waMe:string = '//api.whatsapp.com/send?phone=';
+
   detailOptions:OwlOptions = {
     loop: true,
     autoplay: true,
@@ -65,7 +74,70 @@ export class DetailComponent {
     }
   ];
 
+  constructor(private cs: ContentfulService, private route:ActivatedRoute) {}
+
   toggleAnswer(index: number): void {
-    this.questions[index].open = !this.questions[index].open;
+    this.product.open = !this.product.open;
+  }
+
+  ngOnInit(): void {
+    this.fetchData();
+    this.fetchGallery();
+  }
+
+  async fetchData() {
+    const params = this.route.snapshot.paramMap.get('id');
+    this.cs.getEntry(params).subscribe({
+      next: ((entry:any) => {
+        if (entry) {
+          if (entry.fields && entry.fields.image) {
+            const img = entry.fields.image.sys.id;
+            this.cs.getSingleImg(img).then((img: string | undefined) => {
+              this.product = {
+                ...entry,
+                img,
+                open: false
+              };
+            });
+          } else {
+            this.product = entry;
+          }
+        }
+      })
+    });
+  }
+
+  async fetchGallery() {
+    const params = {
+      content_type: CONFIG.galleryCarousel,
+    };
+
+    this.cs.getEntries(params).subscribe((galleries:any[]) => {
+      if (galleries && galleries.length > 0) {
+        const galleryPromise = galleries.map((gallery: any) => {
+          if (gallery.fields && (gallery.fields.image || gallery.fields.image2)) {
+            const img1 = gallery.fields.image?.sys.id;
+            const img2 = gallery.fields.image2?.sys.id;
+
+            const img1Promise = img1 ? this.cs.getSingleImg(img1) : Promise.resolve(undefined);
+            const img2Promise = img2 ? this.cs.getSingleImg(img2) : Promise.resolve(undefined);
+
+            return Promise.all([img1Promise, img2Promise]).then((images: (string | undefined)[]) => {
+              const [img1Data, img2Data] = images;
+
+              return {
+                ...gallery,
+                img1: img1Data,
+                img2: img2Data
+              };
+            });
+          }
+          return gallery;
+        });
+        Promise.all(galleryPromise).then((newGallery) => {
+          this.items = newGallery;
+        });
+      }
+    });
   }
 }

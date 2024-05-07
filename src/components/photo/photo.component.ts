@@ -8,5 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 export class PhotoComponent {
   @Input() styles:string = 'h-auto';
-  @Input() imgUrl:string = '/assets/img/karyawan-logo.png';
+  @Input() img:string = '/assets/img/karyawan-logo.png';
+  @Input() title:string = 'karyawan-mengaji';
 }
