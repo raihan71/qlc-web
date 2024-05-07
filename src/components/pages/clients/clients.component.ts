@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CarouselComponent } from '../../shared/carousel/carousel.component';
 
 @Component({
@@ -8,4 +8,5 @@ import { CarouselComponent } from '../../shared/carousel/carousel.component';
   templateUrl: './clients.component.html',
 })
 export class ClientsComponent {
+  @Input() items:Array<any> = [];
 }

@@ -1,10 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { PipesModule } from '../../../app/pipes/pipes.module';
 
 @Component({
   selector: 'app-feature',
   standalone: true,
-  imports: [],
+  imports: [PipesModule],
   templateUrl: './feature.component.html',
+  styles: []
 })
 export class FeatureComponent {
+  @Input() items:Array<any> = [];
+  @Input() title:string = '';
+  @Input() desc:string = '';
 }

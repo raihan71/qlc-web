@@ -4,6 +4,20 @@
 
 export const environment = {
   production: true,
+
+  contentful_config: {
+    contentTypeIds: {
+      heroCarousel: 'heroCarousel',
+      galleryCarousel: 'galleryCarousel',
+      mitraCarousel: 'mitraCarousel',
+      articles: 'articles',
+      faqs: 'faqs',
+      feature: 'feature',
+      news: 'news',
+      programs: 'programs',
+      socials: 'socials'
+    }
+  }
 };
 
 

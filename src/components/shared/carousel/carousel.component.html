@@ -2,14 +2,23 @@
   <ng-container *ngFor="let item of items; let i = index">
     <ng-template carouselSlide [id]="item">
       @if (type === 1) {
-        <app-gallery />
+        <app-gallery
+          [title]="item.fields.title"
+          [desc]="item.fields.desc"
+          [img1]="item.img1"
+          [img2]="item.img2"
+        />
       } @else if (type === 2) {
         <app-photo
           [styles]="styles"
-          [imgUrl]="imgUrl"
+          [img]="item.img || imgUrl"
+          [title]="item.fields.title"
         />
       } @else {
-        <app-client />
+        <app-client
+          [title]="item.fields.title"
+          [img]="item.img"
+        />
       }
     </ng-template>
   </ng-container>
