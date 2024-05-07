@@ -6,6 +6,7 @@ import { ContentfulService } from '../../../app/services/contentful.service';
 import { ActivatedRoute } from '@angular/router';
 import { PipesModule } from '../../../app/pipes/pipes.module';
 import { environment } from '../../../environments/environment';
+import { MetaService } from '../../../app/services/metaseo.service';
 
 const CONFIG = environment.contentful_config.contentTypeIds;
 
@@ -74,7 +75,7 @@ export class DetailComponent implements OnInit {
     }
   ];
 
-  constructor(private cs: ContentfulService, private route:ActivatedRoute) {}
+  constructor(private cs: ContentfulService, private route:ActivatedRoute, private meta:MetaService) {}
 
   toggleAnswer(index: number): void {
     this.product.open = !this.product.open;
@@ -90,8 +91,8 @@ export class DetailComponent implements OnInit {
     this.cs.getEntry(params).subscribe({
       next: ((entry:any) => {
         if (entry) {
-          if (entry.fields && entry.fields.image) {
-            const img = entry.fields.image.sys.id;
+          if (entry && entry.image) {
+            const img = entry.image.sys.id;
             this.cs.getSingleImg(img).then((img: string | undefined) => {
               this.product = {
                 ...entry,
@@ -102,6 +103,7 @@ export class DetailComponent implements OnInit {
           } else {
             this.product = entry;
           }
+          this.meta.updateTitle(`Program - ${entry.name}`);
         }
       })
     });

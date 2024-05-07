@@ -4,6 +4,7 @@ import { AboutMeService } from '../../app/services/about-me.service';
 import { aboutMe } from '../../app/models/aboutMe';
 import { ContentfulService } from '../../app/services/contentful.service';
 import { environment } from '../../environments/environment';
+import { MetaService } from '../../app/services/metaseo.service';
 
 const CONFIG = environment.contentful_config.contentTypeIds;
 
@@ -28,10 +29,12 @@ export class AboutComponent implements OnInit {
 
   constructor(
     private _aboutMe: AboutMeService,
-    private cs: ContentfulService
+    private cs: ContentfulService,
+    private meta: MetaService
   ) {}
 
   ngOnInit(): void {
+    this.meta.updateTitle(`Tentang Kami - ${import.meta.env['NG_APP_NAME']}`);
     this.fetchAboutMe();
     this.fetchGallery();
   }

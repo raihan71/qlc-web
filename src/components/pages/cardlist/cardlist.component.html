@@ -35,9 +35,7 @@
                     <a class="font-medium text-lg inline-block hover:text-green-600 transition duration-500 ease-in-out mb-2">
                       {{item.fields?.name}}
                     </a>
-                    <p class="text-gray-500 text-sm truncate">
-                        {{item.fields?.desc | toHtml}}
-                    </p>
+                    <div class="truncate" [innerHTML]="item.fields?.desc | toHtml"></div>
                 </div>
                 <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
                     <a [routerLink]="['/program', item.sys?.id]" class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">

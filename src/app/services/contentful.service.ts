@@ -31,4 +31,9 @@ export class ContentfulService {
       .then(asset => asset.fields.file?.url);
   }
 
+  getPost(id:any) {
+    const promise = this.cdaClient.getEntry(id);
+    return from(promise).pipe(map(entry => entry));
+  }
+
 }

@@ -3,6 +3,7 @@ import { NewslistComponent } from '../../components/pages/newslist/newslist.comp
 import { PaginationComponent } from '../../components/shared/pagination/pagination.component';
 import { ContentfulService } from '../../app/services/contentful.service';
 import { environment } from '../../environments/environment';
+import { MetaService } from '../../app/services/metaseo.service';
 
 const CONFIG = environment.contentful_config.contentTypeIds;
 
@@ -14,15 +15,22 @@ const CONFIG = environment.contentful_config.contentTypeIds;
 })
 export class NewsComponent implements OnInit {
   news:Array<any> = [];
-  constructor(private cs:ContentfulService) {}
+  limit: number = 10;
+  skip: number = 0;
+  currentPage: number = 1;
+
+  constructor(private cs:ContentfulService, private meta: MetaService) {}
 
   ngOnInit(): void {
+    this.meta.updateTitle(`Berita - ${import.meta.env['NG_APP_NAME']}`);
     this.fetchNews();
   }
 
   async fetchNews() {
     const params = {
       content_type: CONFIG.news,
+      limit: this.limit,
+      skip: this.skip
     };
 
     this.cs.getEntries(params).subscribe((news:any[]) => {
@@ -45,5 +53,23 @@ export class NewsComponent implements OnInit {
         });
       }
     });
+  }
+
+  nextPage() {
+    this.skip += this.limit;
+    this.currentPage++;
+    this.fetchNews();
+  }
+
+  previousPage() {
+    this.skip -= this.limit;
+    if (this.skip < 0) {
+      this.skip = 0;
+    }
+    this.currentPage--;
+    if (this.currentPage < 1) {
+      this.currentPage = 1;
+    }
+    this.fetchNews();
   }
 }

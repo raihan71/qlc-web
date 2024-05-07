@@ -3,6 +3,7 @@ import { CardlistComponent } from '../../components';
 import { PaginationComponent } from '../../components/shared/pagination/pagination.component';
 import { environment } from '../../environments/environment';
 import { ContentfulService } from '../../app/services/contentful.service';
+import { MetaService } from '../../app/services/metaseo.service';
 
 const CONFIG = environment.contentful_config.contentTypeIds;
 
@@ -14,16 +15,22 @@ const CONFIG = environment.contentful_config.contentTypeIds;
 })
 export class ProductComponent implements OnInit {
   product:Array<any> = [1,2,3];
+  limit: number = 10;
+  skip: number = 0;
+  currentPage: number = 1;
 
-  constructor(private cs: ContentfulService) {}
+  constructor(private cs: ContentfulService, private meta:MetaService) {}
 
   ngOnInit(): void {
+    this.meta.updateTitle(`Program - ${import.meta.env['NG_APP_NAME']}`);
     this.fetchProduct();
   }
 
   async fetchProduct() {
     const params = {
       content_type: CONFIG.programs,
+      limit: this.limit,
+      skip: this.skip
     };
 
     this.cs.getEntries(params).subscribe((programs:any[]) => {
@@ -46,6 +53,24 @@ export class ProductComponent implements OnInit {
         });
       }
     });
+  }
+
+  nextPage() {
+    this.skip += this.limit;
+    this.currentPage++;
+    this.fetchProduct();
+  }
+
+  previousPage() {
+    this.skip -= this.limit;
+    if (this.skip < 0) {
+      this.skip = 0;
+    }
+    this.currentPage--;
+    if (this.currentPage < 1) {
+      this.currentPage = 1;
+    }
+    this.fetchProduct();
   }
 
 }

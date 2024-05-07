@@ -1,27 +1,27 @@
 <div class="max-w-screen-xl mx-auto p-5">
     <div class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-10">
-        @for (item of items; track $index) {
-          <div class="relative h-64 w-full flex items-end justify-start text-left bg-cover bg-center"
-              [style.background-image]="item.image ? 'url('+ item.image +')' : 'url('+ img +')'">
-              <div class="absolute top-0 mt-20 right-0 bottom-0 left-0 bg-gradient-to-b from-transparent to-gray-900">
-              </div>
-              <div class="absolute top-0 right-0 left-0 mx-5 mt-2 flex justify-between items-center">
-                  <a [routerLink]="['/news', item?.sys?.id]"
-                      class="text-xs bg-green-600 text-white px-5 py-2 uppercase hover:bg-white hover:text-green-600 transition ease-in-out duration-500">{{item?.fields?.category}}</a>
-                  <div class="text-white font-regular flex flex-col justify-start">
-                      <span class="font-semibold">{{item?.sys?.createdAt | date: 'YYYY' }}</span>
-                      <span class="-mt-3 text-3xl leading-0 font-semibold">{{item?.sys?.createdAt | date: 'dd' }}</span>
-                      <span class="-mt-2.5">{{item?.sys?.createdAt | date: 'LLL' }}</span>
-                  </div>
-              </div>
-              <main class="p-5 z-10">
-                  <a [routerLink]="['/news', item?.sys?.id]"
-                      class="text-md text-ellipsis tracking-tight font-medium leading-7 font-regular text-white hover:underline">
-                      {{item?.fields?.title}}
-                  </a>
-              </main>
+      @for (item of items; track $index) {
+        <div class="relative h-64 w-full flex items-end justify-start text-left bg-cover bg-center opacity-80 hover:opacity-85"
+            [style.background-image]="item.image ? 'url('+ item.image +')' : 'url('+ img +')'">
+            <div class="absolute top-0 mt-20 right-0 bottom-0 left-0 bg-gradient-to-b from-transparent to-gray-900">
+            </div>
+            <div class="absolute top-0 right-0 left-0 mx-5 mt-2 flex justify-between items-center">
+                <a [routerLink]="[linkDetail, item?.sys?.id]"
+                    class="text-xs bg-green-600 text-white px-5 py-2 uppercase hover:bg-white hover:text-green-600 transition ease-in-out duration-500">{{item?.fields?.category}}</a>
+                <div class="text-white font-regular flex flex-col justify-start shadow-lg">
+                    <span class="font-semibold">{{item?.sys?.createdAt | date: 'YYYY' }}</span>
+                    <span class="-mt-3 text-3xl leading-0 font-semibold">{{item?.sys?.createdAt | date: 'dd' }}</span>
+                    <span class="-mt-2.5">{{item?.sys?.createdAt | date: 'LLL' }}</span>
+                </div>
+            </div>
+            <main class="p-5 z-10">
+                <a [routerLink]="[linkDetail, item?.sys?.id]"
+                    class="text-md text-ellipsis tracking-tight font-medium leading-7 font-regular text-white hover:underline">
+                    {{item?.fields?.title | ellipsis: 83}}
+                </a>
+            </main>
 
-          </div>
-        }
+        </div>
+      }
     </div>
 </div>

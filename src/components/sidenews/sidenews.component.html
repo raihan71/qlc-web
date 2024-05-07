@@ -1,0 +1,10 @@
+  <div class="bg-zinc-100 p-4">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">{{title}}</h2>
+        <ul class="list-none">
+          @for (item of items; track $index) {
+            <li class="mb-2">
+                <a [routerLink]="['/knowledge', item?.sys?.id]" class="text-gray-700 hover:text-gray-900 text-ellipsis hover:underline">{{item?.fields?.title | ellipsis: 48}}</a>
+            </li>
+          }
+        </ul>
+  </div>
