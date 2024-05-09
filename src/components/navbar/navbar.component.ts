@@ -29,5 +29,6 @@ export class NavbarComponent {
 
   handleShowMenuMobile() {
     this.showMenuMobile = !this.showMenuMobile;
+    window.scrollTo(0, 0);
   }
 }
