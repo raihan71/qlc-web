@@ -25,10 +25,11 @@ export class DetailComponent implements OnInit {
     private route: ActivatedRoute,
     private meta: Meta,
     private title: Title
-  ) {}
+  ) {
+    this.fetchData();
+  }
 
   ngOnInit(): void {
-    this.fetchData();
     this.fetchArticles();
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Title } from '@angular/platform-browser';
+import { Title, Meta } from '@angular/platform-browser';
 import { FeatureComponent, CardlistComponent,
   ClientsComponent, FaqComponent
 } from '../../components';
@@ -66,9 +66,14 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private cs: ContentfulService,
-    private title: Title
+    private title: Title,
+    private meta: Meta
   ) {
     this.title.setTitle(`${import.meta.env['NG_APP_NAME']}`);
+    this.meta.updateTag({ name: 'description', content: `${import.meta.env['NG_APP_NAME']}` });
+    this.meta.updateTag({ property: 'og:title', content: `${import.meta.env['NG_APP_NAME']}` });
+    this.meta.updateTag({ property: 'og:description', content: `${import.meta.env['NG_APP_NAME']}` });
+    this.meta.updateTag({ property: 'og:image', content: 'https://images.ctfassets.net/6g0kbenqa8m7/4CR7YyKMjU9eMhbHVariKr/ea38fbeef0db0714f199eca08b419e77/qlc-logo.png' });
   }
 
   ngOnInit(): void {
