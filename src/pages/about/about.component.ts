@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { FaqComponent } from '../../components';
 import { AboutMeService } from '../../app/services/about-me.service';
 import { aboutMe } from '../../app/models/aboutMe';
 import { ContentfulService } from '../../app/services/contentful.service';
 import { environment } from '../../environments/environment';
-import { MetaService } from '../../app/services/metaseo.service';
 
 const CONFIG = environment.contentful_config.contentTypeIds;
 
@@ -30,11 +30,19 @@ export class AboutComponent implements OnInit {
   constructor(
     private _aboutMe: AboutMeService,
     private cs: ContentfulService,
-    private meta: MetaService
-  ) {}
+    private metaService: Meta,
+    private titleService: Title
+  ) {
+    this.updateMeta();
+  }
+
+  updateMeta() {
+    this.titleService.setTitle(`Tentang Kami - ${import.meta.env['NG_APP_NAME']}`);
+    this.metaService.updateTag({ property: 'og:title', content: `Tentang Kami - ${import.meta.env['NG_APP_NAME']}` });
+    this.metaService.updateTag({ property: 'og:image', content: 'https://images.ctfassets.net/6g0kbenqa8m7/4CR7YyKMjU9eMhbHVariKr/ea38fbeef0db0714f199eca08b419e77/qlc-logo/png' });
+  }
 
   ngOnInit(): void {
-    this.meta.updateTitle(`Tentang Kami - ${import.meta.env['NG_APP_NAME']}`);
     this.fetchAboutMe();
     this.fetchGallery();
   }
@@ -42,6 +50,8 @@ export class AboutComponent implements OnInit {
   async fetchAboutMe() {
     this._aboutMe.getData().subscribe((entry: aboutMe) => {
       this.about = entry;
+      this.metaService.updateTag({ name: 'description', content: `${this.about.profile}` });
+      this.metaService.updateTag({ property: 'og:description', content: `${this.about.profile}` });
       const { logo } = this.about;
       this.cs.getSingleImg(logo.sys.id).then((image: any) => {
         Object.assign(this.about, { image });

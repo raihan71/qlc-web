@@ -3,7 +3,7 @@
         <ul class="list-none">
           @for (item of items; track $index) {
             <li class="mb-2">
-                <a [routerLink]="[linkDetail, item?.sys?.id]" class="text-gray-700 hover:text-gray-900 text-ellipsis hover:underline">{{item?.fields?.title | ellipsis: 49}}</a>
+                <a (click)="goToPage(linkDetail,item?.sys?.id)" class="text-gray-700 hover:text-gray-900 text-ellipsis cursor-pointer hover:underline">{{item?.fields?.title | ellipsis: 49}}</a>
             </li>
           }
         </ul>

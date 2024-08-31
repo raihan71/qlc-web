@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { NewslistComponent } from '../../components/pages/newslist/newslist.component';
 import { ContentfulService } from '../../app/services/contentful.service';
 import { environment } from '../../environments/environment';
-import { MetaService } from '../../app/services/metaseo.service';
 
 const CONFIG = environment.contentful_config.contentTypeIds;
 
@@ -14,14 +14,23 @@ const CONFIG = environment.contentful_config.contentTypeIds;
 })
 export class NewsComponent implements OnInit {
   news:Array<any> = [];
-  limit: number = 10;
+  limit: number = 9;
   skip: number = 0;
   currentPage: number = 1;
 
-  constructor(private cs:ContentfulService, private meta: MetaService) {}
+  constructor(private cs:ContentfulService, private meta: Meta, private title: Title) {
+    this.updateMeta();
+  }
+
+  updateMeta() {
+    this.title.setTitle(`Berita - ${import.meta.env['NG_APP_NAME']}`);
+    this.meta.updateTag({ name: 'description', content: `Berita Terbaru Kami Temukan berbagai informasi terbaru dari kami.` })
+    this.meta.updateTag({ property: 'og:title', content: `Berita Kami - ${import.meta.env['NG_APP_NAME']}` });
+    this.meta.updateTag({ property: 'og:image', content: 'https://images.ctfassets.net/6g0kbenqa8m7/4CR7YyKMjU9eMhbHVariKr/ea38fbeef0db0714f199eca08b419e77/qlc-logo.png' });
+    this.meta.updateTag({ property: 'og:description', content: `Berita Terbaru Kami Temukan berbagai informasi terbaru dari kami.` });
+  }
 
   ngOnInit(): void {
-    this.meta.updateTitle(`Berita - ${import.meta.env['NG_APP_NAME']}`);
     this.fetchNews();
   }
 

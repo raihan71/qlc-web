@@ -10,7 +10,7 @@
       <div class="bg-white py-8">
           <div class="container mx-auto flex flex-col md:flex-row">
               <div class="w-full md:w-3/4 px-1">
-                  <img [src]="news?.img" [alt]="news?.fields?.title" class="mb-8 bg-zinc-500">
+                  <img [src]="news?.img" [alt]="news?.fields?.title" class="object-cover h-96 w-full mb-8 bg-zinc-500">
                   <div class="prose max-w-none">
                       <div [innerHTML]="news?.fields?.desc | toHtml"></div>
                   </div>

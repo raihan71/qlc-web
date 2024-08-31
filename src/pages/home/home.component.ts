@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { forkJoin, from, map, mergeMap, toArray } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 import { FeatureComponent, CardlistComponent,
   ClientsComponent, FaqComponent
 } from '../../components';
@@ -66,7 +66,10 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private cs: ContentfulService,
-  ) {}
+    private title: Title
+  ) {
+    this.title.setTitle(`${import.meta.env['NG_APP_NAME']}`);
+  }
 
   ngOnInit(): void {
     this.fetchHeroes();

@@ -12,10 +12,8 @@ export class ToHtmlPipe implements PipeTransform {
       renderNode: {
         [BLOCKS.EMBEDDED_ASSET]: ({ data: { target: { fields } } }:any) =>
           `
-            <div class="row">
-              <div class="col-12 py-2">
-                <img class="img-fluid d-block" src="${fields.file.url}" alt="${fields.description}"/>
-              </div>
+            <div class="py-2">
+              <img class="object-cover h-48 w-96" src="${fields.file.url}" alt="${fields.description}"/>
             </div>
           `,
       },

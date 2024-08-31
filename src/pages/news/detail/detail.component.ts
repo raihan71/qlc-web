@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
 import { DisqusModule } from 'ngx-disqus';
 import { PipesModule } from '../../../app/pipes/pipes.module';
 import { ContentfulService } from '../../../app/services/contentful.service';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { SidenewsComponent } from '../../../components/sidenews/sidenews.component';
-import { MetaService } from '../../../app/services/metaseo.service';
 
 const CONFIG = environment.contentful_config.contentTypeIds;
 
@@ -23,7 +23,8 @@ export class DetailComponent implements OnInit {
   constructor(
     private cs: ContentfulService,
     private route: ActivatedRoute,
-    private meta: MetaService
+    private meta: Meta,
+    private title: Title
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +40,7 @@ export class DetailComponent implements OnInit {
           if (entry && entry.fields.image) {
             const img = entry.fields.image.sys.id;
             this.cs.getSingleImg(img).then((img: string | undefined) => {
+              this.meta.updateTag({ property: 'og:image', content: `${img}` });
               this.news = {
                 ...entry,
                 img,
@@ -47,7 +49,10 @@ export class DetailComponent implements OnInit {
           } else {
             this.news = entry;
           }
-          this.meta.updateTitle(`Berita - ${entry.fields.title}`);
+          this.title.setTitle(`${entry.fields.title} - Berita`);
+          this.meta.updateTag({ name: 'description', content: `${entry.fields.title}` })
+          this.meta.updateTag({ property: 'og:title', content: `${entry.fields.title}` });
+          this.meta.updateTag({ property: 'og:description', content: `${entry.fields.title}` });
         }
       })
     });
