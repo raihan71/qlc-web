@@ -8,16 +8,20 @@ import { PhotoComponent } from '../../photo/photo.component';
 @Component({
   selector: 'app-carousel',
   standalone: true,
-  imports: [CarouselModule, CommonModule, GalleryComponent,
-    ClientComponent, PhotoComponent
+  imports: [
+    CarouselModule,
+    CommonModule,
+    GalleryComponent,
+    ClientComponent,
+    PhotoComponent,
   ],
-  templateUrl: './carousel.component.html'
+  templateUrl: './carousel.component.html',
 })
 export class CarouselComponent {
-  @Input() items:Array<any> = [1,2,3,4,5,6];
-  @Input() type:number = 0;
-  @Input() styles:string = 'h-auto';
-  @Input() imgUrl:string = '/assets/img/karyawan-logo.png';
+  @Input() items: Array<any> = [1, 2, 3, 4, 5, 6];
+  @Input() type: number = 0;
+  @Input() styles: string = 'h-auto';
+  @Input() imgUrl: string = '/assets/img/karyawan-logo.png';
   @Input() customOptions: OwlOptions = {
     loop: true,
     autoplay: true,
