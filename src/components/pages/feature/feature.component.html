@@ -49,18 +49,25 @@
           width="320"
           height="640"
           title="Video Player"
-          style="box-shadow: 10px 10px 5px 12px rgb(209, 218, 218)"
-          class="rounded rounded-xl border border-4 border-black"
+          style="
+            box-shadow: 10px 10px 5px 12px rgb(209, 218, 218);
+            overflow: hidden;
+          "
+          class="rounded-xl border-4 border-black"
           type="text/html"
           [src]="youTubeUrl | safe : 'yt'"
+          allow="
+              accessibility-events; accelerometer;
+              autoplay; encrypted-media; picture-in-picture; clipboard-write;
+              gyroscope;web-share"
         >
         </iframe>
 
         <span
-          class="absolute -right-1 top-28 border border-4 border-black h-10 rounded-md"
+          class="absolute -right-1 top-28 border-4 border-black h-10 rounded-md"
         ></span>
         <span
-          class="absolute -right-1 top-[220px] border border-4 border-black h-24 rounded-md"
+          class="absolute -right-1 top-[220px] border-4 border-black h-24 rounded-md"
         ></span>
       </div>
     </div>
