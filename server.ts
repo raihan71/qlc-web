@@ -20,9 +20,12 @@ export function app(): express.Express {
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
-  server.get('*.*', express.static(browserDistFolder, {
-    maxAge: '1y'
-  }));
+  server.get(
+    '*.*',
+    express.static(browserDistFolder, {
+      maxAge: '1y',
+    })
+  );
 
   // All regular routes use the Angular engine
   server.get('*', (req, res, next) => {
@@ -39,6 +42,36 @@ export function app(): express.Express {
       .then((html) => res.send(html))
       .catch((err) => next(err));
   });
+
+  // Handle changes to meta based on changed routes
+  server.use((req, res, next) => {
+    const { originalUrl } = req;
+    const meta = getMetaForRoute(originalUrl); // Replace with your logic to get meta for the route
+
+    if (meta) {
+      res.set('meta', JSON.stringify(meta));
+    }
+
+    next();
+  });
+
+  function getMetaForRoute(originalUrl: string): any {
+    let meta = {};
+
+    if (originalUrl === '/program') {
+      meta = {
+        title: 'Program',
+        description: 'Program unggulan kami adalah...',
+      };
+    } else if (originalUrl === '/news') {
+      meta = {
+        title: 'Berita',
+        description: 'Berita terbaru kami adalah...',
+      };
+    }
+
+    return meta;
+  }
 
   return server;
 }

@@ -1,56 +1,91 @@
 <footer class="p-4 bg-white sm:p-6">
-  <div class="mx-auto max-w-screen-xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
+  <div
+    class="mx-auto max-w-screen-xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8"
+  >
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
       <div>
         <div class="flex items-center space-x-3">
-          <img [src]="about.image || 'assets/img/qlc-logo.png'" loading="lazy" class="h-12 md:h-10" alt="logo-qlc" />
-          <span class="">{{about.name}}</span>
+          <img
+            [src]="about.image || 'assets/img/qlc-logo.png'"
+            loading="lazy"
+            class="h-12 md:h-10"
+            alt="logo-qlc"
+          />
+          <span class="">{{ about.name }}</span>
         </div>
 
         <p class="mt-4 max-w-xs text-gray-500">
-          {{about.address}}
+          {{ about.address }}
         </p>
 
         <ul class="mt-8 flex gap-6">
           @for (item of socials; track $index) {
-            <li>
-              <a
-                [href]="item.fields.url"
-                rel="noreferrer"
-                target="_blank"
-                class="text-gray-700 transition hover:opacity-75"
-              >
-                <span class="sr-only">{{item.fields.name}}</span>
-                <div [innerHTML]="item.icon.content[0].content[0].value | sanitizedHtml"></div>
-              </a>
-            </li>
+          <li>
+            <a
+              [href]="item.fields.url"
+              rel="noreferrer"
+              target="_blank"
+              class="text-gray-700 transition hover:opacity-75"
+            >
+              <span class="sr-only">{{ item.fields.name }}</span>
+              <div
+                [innerHTML]="
+                  item.icon.content[0].content[0].value | sanitizedHtml
+                "
+              ></div>
+            </a>
+          </li>
           }
         </ul>
       </div>
 
-      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
+      <div
+        class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4"
+      >
         <div>
           <p class="font-medium text-gray-900">Layanan</p>
 
           <ul class="mt-6 space-y-4 text-sm">
             <li>
-              <a href="/program" class="text-gray-700 transition hover:opacity-75"> Tahsin Al-Qur’an </a>
+              <a
+                href="/program"
+                class="text-gray-700 transition hover:opacity-75"
+              >
+                Tahsin Al-Qur’an
+              </a>
             </li>
 
             <li>
-              <a href="/program" class="text-gray-700 transition hover:opacity-75"> Tahfidz Al-Qur’an </a>
+              <a
+                href="/program"
+                class="text-gray-700 transition hover:opacity-75"
+              >
+                Tahfidz Al-Qur’an
+              </a>
             </li>
 
             <li>
-              <a href="/program" class="text-gray-700 transition hover:opacity-75"> Ibadah Praktik </a>
+              <a
+                href="/program"
+                class="text-gray-700 transition hover:opacity-75"
+              >
+                Ibadah Praktik
+              </a>
             </li>
 
             <li>
-              <a href="/knowledge" class="text-gray-700 transition hover:opacity-75"> Kajian Ilmu </a>
+              <a
+                href="/knowledge"
+                class="text-gray-700 transition hover:opacity-75"
+              >
+                Kajian Ilmu
+              </a>
             </li>
 
             <li>
-              <a href="/news" class="text-gray-700 transition hover:opacity-75"> Berita Terbaru </a>
+              <a href="/news" class="text-gray-700 transition hover:opacity-75">
+                Berita Terbaru
+              </a>
             </li>
           </ul>
         </div>
@@ -60,55 +95,100 @@
 
           <ul class="mt-6 space-y-4 text-sm">
             <li>
-              <a href="/about" class="text-gray-700 transition hover:opacity-75"> Tentang Kami </a>
+              <a
+                href="/about"
+                class="text-gray-700 transition hover:opacity-75"
+              >
+                Tentang Kami
+              </a>
             </li>
 
             <li>
-              <a href="/about" class="text-gray-700 transition hover:opacity-75"> Alamat </a>
+              <a
+                href="/about"
+                class="text-gray-700 transition hover:opacity-75"
+              >
+                Alamat
+              </a>
             </li>
 
             <li>
-              <a href="/home#reviewTestimoni" class="text-gray-700 transition hover:opacity-75"> Review Testimoni </a>
+              <a
+                href="/home#reviewTestimoni"
+                class="text-gray-700 transition hover:opacity-75"
+              >
+                Review Testimoni
+              </a>
             </li>
           </ul>
         </div>
 
         <div>
-          <p class="font-medium text-gray-900">Link</p>
+          <p class="font-medium text-gray-900">Kebijakan Privasi</p>
 
           <ul class="mt-6 space-y-4 text-sm">
             <li>
-              <a [href]="waMe+about.whatsapp+'&text=assalamualaikum...mau tanya' | safe" target="_blank" class="text-gray-700 transition hover:opacity-75"> Hubungi Kami </a>
+              <a
+                [href]="
+                  waMe + about.whatsapp + '&text=assalamualaikum...mau tanya'
+                    | safe
+                "
+                target="_blank"
+                class="text-gray-700 transition hover:opacity-75"
+              >
+                Hubungi Kami
+              </a>
             </li>
 
             <li>
-              <a href="/home#faq" class="text-gray-700 transition hover:opacity-75"> FAQs </a>
+              <a
+                href="/home#faq"
+                class="text-gray-700 transition hover:opacity-75"
+              >
+                FAQs
+              </a>
             </li>
-
           </ul>
         </div>
 
         <div>
-          <p class="font-medium text-gray-900">Legal</p>
+          <p class="font-medium text-gray-900">Legalitas</p>
 
           <ul class="mt-6 space-y-4 text-sm">
             <li>
-              <a href="javascript:;" class="text-gray-700 transition hover:opacity-75"> Aksesibilitas </a>
+              <a
+                href="javascript:;"
+                class="text-gray-700 transition hover:opacity-75"
+              >
+                Aksesibilitas
+              </a>
             </li>
 
             <li>
-              <a href="javascript:;" class="text-gray-700 transition hover:opacity-75"> Returns Policy </a>
+              <a
+                href="javascript:;"
+                class="text-gray-700 transition hover:opacity-75"
+              >
+                Returns Policy
+              </a>
             </li>
 
             <li>
-              <a href="javascript:;" class="text-gray-700 transition hover:opacity-75"> Refund Policy </a>
+              <a
+                href="javascript:;"
+                class="text-gray-700 transition hover:opacity-75"
+              >
+                Refund Policy
+              </a>
             </li>
-
           </ul>
         </div>
       </div>
     </div>
 
-    <p class="text-xs text-gray-500">&copy; {{year.getFullYear()}}. <span>{{about.name}}</span>. All rights reserved.</p>
+    <p class="text-xs text-gray-500">
+      &copy; {{ year.getFullYear() }}. <span>{{ about.name }}</span
+      >. All rights reserved.
+    </p>
   </div>
 </footer>

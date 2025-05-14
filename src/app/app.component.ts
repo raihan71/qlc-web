@@ -8,20 +8,31 @@ import { ContentfulService } from './services/contentful.service';
 import { aboutMe } from './models/aboutMe';
 import { PipesModule } from './pipes/pipes.module';
 import { environment } from '../environments/environment';
-import { GoogleAnalyticsGTagComponent } from '../components/gtm-analytic/gtm-analytic.component';
+import { GoogleAnalyticsGTagComponent } from '../components/marketing/gtm-analytic/gtm-analytic.component';
+import { GoogleAdsSenseComponent } from '../components/marketing/google-adsense/adsenses.component';
+import { AdrollComponent } from '../components/marketing/adroll/adroll.component';
 
 const CONFIG = environment.contentful_config.contentTypeIds;
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, FooterComponent, PipesModule, GoogleAnalyticsGTagComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    NavbarComponent,
+    FooterComponent,
+    PipesModule,
+    GoogleAnalyticsGTagComponent,
+    GoogleAdsSenseComponent,
+    AdrollComponent,
+  ],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  about:aboutMe = {};
-  waMe:string = '//api.whatsapp.com/send?phone=';
-  socials:Array<any> = [];
+  about: aboutMe = {};
+  waMe: string = '//api.whatsapp.com/send?phone=';
+  socials: Array<any> = [];
   activateGoTop: boolean = false;
 
   constructor(
@@ -36,27 +47,27 @@ export class AppComponent {
         Object.assign(this.about, { image });
       });
     });
-    this.cs.getEntries({content_type:CONFIG.socials}).subscribe({
-      next:((entries:Array<any>) => {
-        this.socials = entries.map(entry => {
+    this.cs.getEntries({ content_type: CONFIG.socials }).subscribe({
+      next: (entries: Array<any>) => {
+        this.socials = entries.map((entry) => {
           return {
             ...entry,
             icon: entry.fields.icon,
-          }
+          };
         });
-      })
+      },
     });
   }
 
-  @HostListener('window:scroll',[])
+  @HostListener('window:scroll', [])
   onWindowScroll() {
-    if ( window.scrollY > 100 ) {
+    if (window.scrollY > 100) {
       this.activateGoTop = true;
     } else {
       this.activateGoTop = false;
     }
   }
   scrollToTop() {
-      return window.scrollTo(0, 0);
+    return window.scrollTo(0, 0);
   }
 }

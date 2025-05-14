@@ -13,12 +13,12 @@ const CONFIG = environment.contentful_config.contentTypeIds;
 @Component({
   selector: 'app-detail',
   standalone: true,
-  imports: [DisqusModule, PipesModule, CommonModule,SidenewsComponent],
-  templateUrl: './detail.component.html'
+  imports: [DisqusModule, PipesModule, CommonModule, SidenewsComponent],
+  templateUrl: './detail.component.html',
 })
 export class DetailComponent implements OnInit {
-  news:any = {};
-  articles:Array<any> = [];
+  news: any = {};
+  articles: Array<any> = [];
 
   constructor(
     private cs: ContentfulService,
@@ -36,7 +36,7 @@ export class DetailComponent implements OnInit {
   async fetchData() {
     const params = this.route.snapshot.paramMap.get('id');
     this.cs.getPost(params).subscribe({
-      next: ((entry:any) => {
+      next: (entry: any) => {
         if (entry) {
           if (entry && entry.fields.image) {
             const img = entry.fields.image.sys.id;
@@ -51,21 +51,30 @@ export class DetailComponent implements OnInit {
             this.news = entry;
           }
           this.title.setTitle(`${entry.fields.title} - Berita`);
-          this.meta.updateTag({ name: 'description', content: `${entry.fields.title}` })
-          this.meta.updateTag({ property: 'og:title', content: `${entry.fields.title}` });
-          this.meta.updateTag({ property: 'og:description', content: `${entry.fields.title}` });
+          this.meta.updateTag({
+            name: 'description',
+            content: `${entry.fields.title}`,
+          });
+          this.meta.updateTag({
+            property: 'og:title',
+            content: `Berita hari ini ${entry.fields.title}`,
+          });
+          this.meta.updateTag({
+            property: 'og:description',
+            content: `${entry.fields.title}`,
+          });
         }
-      })
+      },
     });
   }
 
   async fetchArticles() {
     const params = {
       content_type: CONFIG.articles,
-      limit: 5
+      limit: 5,
     };
 
-    this.cs.getEntries(params).subscribe((articles:any[]) => {
+    this.cs.getEntries(params).subscribe((articles: any[]) => {
       if (articles && articles.length > 0) {
         const articlePromise = articles.map((article: any) => {
           if (article.fields && article.fields.image) {
@@ -73,7 +82,7 @@ export class DetailComponent implements OnInit {
             return this.cs.getSingleImg(img).then((img: string | undefined) => {
               return {
                 ...article,
-                img
+                img,
               };
             });
           }
@@ -86,5 +95,4 @@ export class DetailComponent implements OnInit {
       }
     });
   }
-
 }
