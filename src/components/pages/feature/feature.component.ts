@@ -13,5 +13,5 @@ export class FeatureComponent {
   @Input() title: string = '';
   @Input() desc: string = '';
   youTubeUrl: any =
-    'https://www.youtube.com/embed/rmyuawc2_dU?si=GZJWenBkMr3tsyaW&autoplay=1&mute=0&loop=1&controls=0&modestbranding=0&rel=0&playsinline=1&enablejsapi=1&playlist=ost7_npsZ1Y';
+    'https://www.youtube.com/embed/rmyuawc2_dU?si=GZJWenBkMr3tsyaW&autoplay=1&mute=0&loop=1&controls=0&modestbranding=0&rel=0&playsinline=1&enablejsapi=1&playlist=rmyuawc2_dU';
 }
