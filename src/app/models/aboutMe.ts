@@ -4,8 +4,12 @@ export interface aboutMe {
   email?: string;
   profile?: string;
   whatsapp?: string;
-  logo?: any,
-  image?: any,
-  visi?:any,
-  misi?:any
-};
+  logo?: any;
+  image?: any;
+  visi?: any;
+  misi?: any;
+  judulHeroAtas?: string;
+  subjudulHeroAtas?: string;
+  judulFiturTengah?: string;
+  subjudulFiturTengah?: string;
+}

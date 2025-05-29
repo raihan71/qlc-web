@@ -1,25 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
-import { FeatureComponent, CardlistComponent,
-  ClientsComponent, FaqComponent
+import {
+  FeatureComponent,
+  CardlistComponent,
+  ClientsComponent,
+  FaqComponent,
 } from '../../components';
 import { CarouselComponent } from '../../components/shared/carousel/carousel.component';
 import { ContentfulService } from '../../app/services/contentful.service';
 import { environment } from '../../environments/environment';
+import { AboutMeService } from '../../app/services/about-me.service';
+import { aboutMe } from '../../app/models/aboutMe';
 
 const CONFIG = environment.contentful_config;
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ClientsComponent, FeatureComponent, CardlistComponent,
-  FaqComponent, CarouselComponent, RouterLink],
+  imports: [
+    ClientsComponent,
+    FeatureComponent,
+    CardlistComponent,
+    FaqComponent,
+    CarouselComponent,
+    RouterLink,
+  ],
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-  items:Array<any> = [1,2,3];
-  galleryOptions:object = {
+  items: Array<any> = [1, 2, 3];
+  galleryOptions: object = {
     loop: true,
     autoplay: false,
     center: true,
@@ -36,9 +47,9 @@ export class HomeComponent implements OnInit {
       1000: {
         items: 1,
       },
-    }
+    },
   };
-  photoOptions:object = {
+  photoOptions: object = {
     loop: true,
     autoplay: true,
     center: true,
@@ -55,25 +66,43 @@ export class HomeComponent implements OnInit {
       1000: {
         items: 1,
       },
-    }
-  }
-  heros:Array<any> = [];
-  galleries:Array<any> = [];
-  clients:Array<any> = [];
-  features:Array<any> = [];
-  programs:Array<any> = [];
-  faqs:Array<any> = [];
+    },
+  };
+  heros: Array<any> = [];
+  galleries: Array<any> = [];
+  clients: Array<any> = [];
+  features: Array<any> = [];
+  programs: Array<any> = [];
+  faqs: Array<any> = [];
+  aboutMe: aboutMe = {};
 
   constructor(
     private cs: ContentfulService,
     private title: Title,
-    private meta: Meta
+    private meta: Meta,
+    private _aboutMe: AboutMeService
   ) {
     this.title.setTitle(`${import.meta.env['NG_APP_NAME']}`);
-    this.meta.updateTag({ name: 'description', content: `${import.meta.env['NG_APP_NAME']}` });
-    this.meta.updateTag({ property: 'og:title', content: `${import.meta.env['NG_APP_NAME']}` });
-    this.meta.updateTag({ property: 'og:description', content: `${import.meta.env['NG_APP_NAME']}` });
-    this.meta.updateTag({ property: 'og:image', content: 'https://images.ctfassets.net/6g0kbenqa8m7/4CR7YyKMjU9eMhbHVariKr/ea38fbeef0db0714f199eca08b419e77/qlc-logo.png' });
+    this.meta.updateTag({
+      name: 'description',
+      content: `${import.meta.env['NG_APP_NAME']}`,
+    });
+    this.meta.updateTag({
+      property: 'og:title',
+      content: `${import.meta.env['NG_APP_NAME']}`,
+    });
+    this.meta.updateTag({
+      property: 'og:description',
+      content: `${import.meta.env['NG_APP_NAME']}`,
+    });
+    this.meta.updateTag({
+      property: 'og:image',
+      content:
+        'https://images.ctfassets.net/6g0kbenqa8m7/4CR7YyKMjU9eMhbHVariKr/ea38fbeef0db0714f199eca08b419e77/qlc-logo.png',
+    });
+    this._aboutMe.getData().subscribe((entry: aboutMe) => {
+      this.aboutMe = entry;
+    });
   }
 
   ngOnInit(): void {
@@ -90,7 +119,7 @@ export class HomeComponent implements OnInit {
       content_type: CONFIG.contentTypeIds.heroCarousel,
     };
 
-    this.cs.getEntries(params).subscribe((heroes:any[]) => {
+    this.cs.getEntries(params).subscribe((heroes: any[]) => {
       if (heroes && heroes.length > 0) {
         const herosPromise = heroes.map((hero: any) => {
           if (hero.fields && hero.fields.image) {
@@ -98,7 +127,7 @@ export class HomeComponent implements OnInit {
             return this.cs.getSingleImg(img).then((img: string | undefined) => {
               return {
                 ...hero,
-                img
+                img,
               };
             });
           }
@@ -117,25 +146,34 @@ export class HomeComponent implements OnInit {
       content_type: CONFIG.contentTypeIds.galleryCarousel,
     };
 
-    this.cs.getEntries(params).subscribe((galleries:any[]) => {
+    this.cs.getEntries(params).subscribe((galleries: any[]) => {
       if (galleries && galleries.length > 0) {
         const galleryPromise = galleries.map((gallery: any) => {
-          if (gallery.fields && (gallery.fields.image || gallery.fields.image2)) {
+          if (
+            gallery.fields &&
+            (gallery.fields.image || gallery.fields.image2)
+          ) {
             const img1 = gallery.fields.image?.sys.id;
             const img2 = gallery.fields.image2?.sys.id;
 
-            const img1Promise = img1 ? this.cs.getSingleImg(img1) : Promise.resolve(undefined);
-            const img2Promise = img2 ? this.cs.getSingleImg(img2) : Promise.resolve(undefined);
+            const img1Promise = img1
+              ? this.cs.getSingleImg(img1)
+              : Promise.resolve(undefined);
+            const img2Promise = img2
+              ? this.cs.getSingleImg(img2)
+              : Promise.resolve(undefined);
 
-            return Promise.all([img1Promise, img2Promise]).then((images: (string | undefined)[]) => {
-              const [img1Data, img2Data] = images;
+            return Promise.all([img1Promise, img2Promise]).then(
+              (images: (string | undefined)[]) => {
+                const [img1Data, img2Data] = images;
 
-              return {
-                ...gallery,
-                img1: img1Data,
-                img2: img2Data
-              };
-            });
+                return {
+                  ...gallery,
+                  img1: img1Data,
+                  img2: img2Data,
+                };
+              }
+            );
           }
           return gallery;
         });
@@ -151,7 +189,7 @@ export class HomeComponent implements OnInit {
       content_type: CONFIG.contentTypeIds.mitraCarousel,
     };
 
-    this.cs.getEntries(params).subscribe((clients:any[]) => {
+    this.cs.getEntries(params).subscribe((clients: any[]) => {
       if (clients && clients.length > 0) {
         const clientPromise = clients.map((client: any) => {
           if (client.fields && client.fields.logo) {
@@ -159,7 +197,7 @@ export class HomeComponent implements OnInit {
             return this.cs.getSingleImg(img).then((img: string | undefined) => {
               return {
                 ...client,
-                img
+                img,
               };
             });
           }
@@ -179,24 +217,24 @@ export class HomeComponent implements OnInit {
     };
 
     this.cs.getEntries(params).subscribe({
-      next:((entries:Array<any>) => {
-        this.features = entries.map(entry => {
+      next: (entries: Array<any>) => {
+        this.features = entries.map((entry) => {
           return {
             ...entry,
-            icon: entry.fields.icon
+            icon: entry.fields.icon,
           };
         });
-      })
+      },
     });
   }
 
   async fetchProduct() {
     const params = {
       content_type: CONFIG.contentTypeIds.programs,
-      limit: 3
+      limit: 3,
     };
 
-    this.cs.getEntries(params).subscribe((programs:any[]) => {
+    this.cs.getEntries(params).subscribe((programs: any[]) => {
       if (programs && programs.length > 0) {
         const programPromise = programs.map((program: any) => {
           if (program.fields && program.fields.image) {
@@ -204,7 +242,7 @@ export class HomeComponent implements OnInit {
             return this.cs.getSingleImg(img).then((img: string | undefined) => {
               return {
                 ...program,
-                img
+                img,
               };
             });
           }
@@ -224,16 +262,15 @@ export class HomeComponent implements OnInit {
     };
 
     this.cs.getEntries(params).subscribe({
-      next:((entries:Array<any>) => {
-        this.faqs = entries.map(entry => {
+      next: (entries: Array<any>) => {
+        this.faqs = entries.map((entry) => {
           return {
             ...entry,
             answer: entry.fields.answer,
-            open: false
-          }
+            open: false,
+          };
         });
-      })
+      },
     });
   }
-
 }
